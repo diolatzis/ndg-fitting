@@ -168,7 +168,7 @@
           </video>
         </div>
         <div class="item item-aquarium">
-          <video poster="" id="salon" autoplay controls muted loop height="100%">
+          <video poster="" id="aquarium" autoplay controls muted loop height="100%">
             <source src="./static/videos/aquarium.mp4"
                     type="video/mp4">
           </video>
@@ -251,6 +251,21 @@
       estimate which Gaussians can be discarded safely through our N-Dimensional culling inspired by Locality Sensitive Hashing. With the remaining ones we evaluate
       for each q our Gaussian mixture either in N dimensions for surface radiance fields or by first projecting the Gaussians to 3D.
       Our optimization converges to high quality while it also controlling the introduction of new Gaussians via our Optimization Controlled Refinement.
+      </p>
+    </div>
+
+    <h3 class="title is-4">N-Dimensional Gaussians Culling</h3>
+
+    
+    <div class="columns is-centered has-text-centered">
+      <img src="./static/images/culling.png"
+      class="overview"
+      alt=""/>
+    </div>
+
+    <div class="content has-text-justified">
+      <p>
+      Culling irrelevant Gaussians is challenging in higher dimensions. Inspired by Locality Sensitive Hashing where locality is estimated by projection to random vectors we project both our Gaussians and the query points on random vectors and discard Gaussians safely if they fall far away from the query points. This is a tunable culling process that doesn't require any data structure and it works as the Gaussians are changing during optimization. 
       </p>
     </div>
 
