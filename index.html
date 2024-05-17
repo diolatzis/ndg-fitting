@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="N-Dimensional Gaussians for Fitting of High Dimensional
+        Functions">
+  <meta name="keywords" content="Gaussian, Splatting, N-D Gaussian, NDG, N-D Gaussian Fitting">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>N-Dimensional Gaussians for Fitting of High Dimensional
+    Functions</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href=""> <!-- TODO: change icon -->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">N-Dimensional Gaussians for Fitting of High Dimensional
+            Functions</h1>
+          <h1 class="is-size-5 publication-authors"> SIGGRAPH 2024 (Conference Track)</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://sdiolatz.info">Stavros Diolatzis</a><sup>1</sup>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <span class="author-block">
+              Tobias Zirr<sup>1</sup>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <span class="author-block">
+              <a href="https://www.alexku.me/">Alexandr Kuznetsov</a><sup>1</sup>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <span class="author-block">
+              <a href="https://grgkopanas.github.io/">Georgios Kopanas</a><sup>2, 3</sup>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <span class="author-block">
+              <a href="http://kaplanyan.com/">Anton Kaplanyan</a><sup>1</sup></span>
+          </div>
+
+          <div class="is-size-5 publication-authors">            
+			      <sup>1</sup> <a href="https://www.intel.com/content/www/us/en/developer/topic-technology/graphics-research/overview.html"><img style="width:15%; padding-right: 15px; padding-left:0px;" src="static/images/intel_logo.png"> </a>    
+			      <sup>2</sup> <a href="https://www.inria.fr/"><img style="width:20%; padding-right: 15px; padding-left:0px;" src="static/images/inria_logo.png"> </a>            
+            <sup>3</sup> <a href="https://univ-cotedazur.eu/"><img style="width:22%; padding-right: 15px; padding-left:10px;" src="static/images/uca_logo.png"> </a>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="./static/files/ngd-paper.pdf"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper 84MB</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="./static/files/ngd-paper-compressed.pdf"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper 4MB</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="./static/files/ngd-supp.pdf"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Supplemental</span>
+                </a>
+              </span>
+              <!-- <span class="link-block">
+                <a href="https://arxiv.org/abs/2011.12948"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span> -->
+              <!-- Video Link. -->
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/intel/ngd-fitting"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code (Coming Soon)</span>
+                  </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <img src="./static/images/teaser.png"
+                 class="interpolation-image"
+                 alt=""/>
+                 
+          <div class="content has-text-justified">
+            Our method optimizes N-Dimensional Gaussians to approximate high dimensional anisotropic functions in a
+            few minutes. Our parameterization, culling and optimization-controlled refinement allows us to quickly estimate Gaussian
+            parameters to represent various complex functions. We show two applications:
+            <ul>
+              <li>10D+ Application (Top): Synthetic scenes for which we can render G-Buffers such as world position, albedo, roughness etc. can be shaded with global illumination through our 10D+ Gaussian mixture. Even though the Gaussians are evaluated on the surfaces their representation power can efficiently estimate the appearance of reflections and transmittance with correct parallax effects. Apart from the G-Buffers we support variability of moving objects and light sources as extra dimensions.</li>
+              <li> 6D Application (Bottom): Real world scenes with complex view dependent effects can be modeled efficiently through our 6 dimensional Gaussian mixture. The 6 dimensions of world position and view direction give the parameterization the same representation power for both diffuse and view dependent effects, reconstructing complex effects like the one through the magnifying glass.</li>
+            </ul>
+          </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item item-cd">
+          <video poster="" id="cd" autoplay controls muted loop height="100%">
+            <source src="./static/videos/cd.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-bathroom">
+          <video poster="" id="bathroom" autoplay controls muted loop height="100%">
+            <source src="./static/videos/bathroom.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-aquarium">
+          <video poster="" id="salon" autoplay controls muted loop height="100%">
+            <source src="./static/videos/aquarium.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-salon">
+          <video poster="" id="salon" autoplay controls muted loop height="100%">
+            <source src="./static/videos/salon.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-tools">
+          <video poster="" id="tools" autoplay controls muted loop height="100%">
+            <source src="./static/videos/tools.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+          In the wake of many new ML-inspired approaches for reconstructing and representing
+          high-quality 3D content, recent hybrid and 
+          explicitly learned representations exhibit promising performance and quality characteristics. 
+          However, their scaling to higher dimensions
+          is challenging, e.g. when accounting for dynamic content with respect
+          to additional parameters such as material properties, illumination, or time.
+          In this paper, we tackle these challenges for an explicit representations based on 
+          Gaussian mixture models. With our solutions, we arrive at efficient fitting of
+          compact N-dimensional Gaussian mixtures and enable efficient evaluation at render time:
+          For fast fitting and evaluation, 
+          we introduce a high-dimensional culling scheme 
+          that efficiently bounds N-D Gaussians, inspired by Locality Sensitive Hashing.
+          For adaptive refinement yet compact representation, we introduce a 
+          loss-adaptive density control scheme that incrementally guides the use of 
+          additional capacity towards missing details.
+          With these tools we can for the first time represent complex appearance that 
+          depends on many input dimensions beyond position or viewing angle within a compact, 
+          explicit representation optimized in minutes and rendered in milliseconds.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+    <!-- Paper video. -->
+    <!-- <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Video</h2>
+        <div class="publication-video">
+          <iframe src=""
+                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div> -->
+    <!--/ Paper video. -->
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3">Method</h2>
+
+    <img src="./static/images/overview.png"
+    class="overview"
+    alt=""/>
+
+    <div class="content has-text-justified">
+      <p>
+      Our optimization receives a number of query points q of N dimensionality as input. For these given points we
+      estimate which Gaussians can be discarded safely through our N-Dimensional culling inspired by Locality Sensitive Hashing. With the remaining ones we evaluate
+      for each q our Gaussian mixture either in N dimensions for surface radiance fields or by first projecting the Gaussians to 3D.
+      Our optimization converges to high quality while it also controlling the introduction of new Gaussians via our Optimization Controlled Refinement.
+      </p>
+    </div>
+
+    
+    <h3 class="title is-4">Optimization Controlled Refinement</h3>
+
+    <img src="./static/images/refinement.png"
+    class="overview"
+    alt=""/>
+
+    <div class="content has-text-justified">
+      <p>
+      In higher dimensions the refinement process of the Gaussian mixture becomes much more challenging. With many dimensions to choose from which one should we use as a criterion for refinement? Which one should we split along? To avoid this we propose a refinement process controlled by the optimizer instead. Each main Gaussian (Blue) receives two low opacity/brightness child Gaussians (Green) that are linked with the parent through a hierarchical relationship (see paper). In this way the optimizer can choose to utilize them to add details. Once these Gaussians are used enough they become main Gaussians and have child Gaussians of their own. We can see in the training video how Green Gaussians are introduced to add details. 
+      </p>
+    </div>
+
+    <video poster="" id="cd_comp" autoplay controls muted loop height="100%">
+      <source src="./static/videos/refinement.mp4"
+              type="video/mp4">
+    </video>
+
+    <div class="content has-text-justified">
+      <p>
+      In this training every 300 iterations we introduce new child Gaussians (Green) to the main Gaussians (Blue). As the training progress the child Gaussians add more and more fine details to the 6D Gaussian mixture without a splitting or merging mechanism. 
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3">Comparison</h2>
+
+    <h3 class="title is-4">6D Gaussians</h3>
+    
+    <video poster="" id="cd_comp" autoplay controls muted loop height="100%">
+      <source src="./static/videos/cd_comp.mp4"
+              type="video/mp4">
+    </video>
+
+    <img src="./static/images/splatting_comp.png"
+    class="splatting-comp"
+    alt=""/>
+
+    <h3 class="title is-4">10D+ Gaussians</h3>
+
+    <img src="./static/images/mitsuba.png"
+    class="mitsuba-comp"
+    alt=""/>
+  </div>
+</section>
+
+<!-- <section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{park2021nerfies,
+  author    = {Park, Keunhong and Sinha, Utkarsh and Barron, Jonathan T. and Bouaziz, Sofien and Goldman, Dan B and Seitz, Steven M. and Martin-Brualla, Ricardo},
+  title     = {Nerfies: Deformable Neural Radiance Fields},
+  journal   = {ICCV},
+  year      = {2021},
+}</code></pre>
+  </div>
+</section> -->
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Acknowledgements</h2>
+        <div class="content has-text-justified">
+          <p>
+            We would like to thank the anonymous referees for their valuable
+            comments and helpful suggestions. We also thank Laurent Belcour
+            and Sebastian Herholz for their valuable input and suggestions.
+          </p>
+          <p>
+            We thank the authors of <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a> for open sourcing the webpage templated which we used for this site.
+          </p>
+        </div>
+      </div>
+    </div>
+</section>
+
+</body>
+</html>
